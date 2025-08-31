@@ -11,9 +11,10 @@ employees = [
     'zach', 'serge', 'george', 'jason', 'oscar', 'joey', 'wilfredo',
 ] 
 
+rotations = int(input("How many rotations? 10 is 2 teams per day. "))
+
 def scheduler():
     current_schedule = employees.copy()
-    global sliced_names
     sliced_names = current_schedule[0:5]
     wb=Workbook()
     ws = wb.active
@@ -28,13 +29,13 @@ def scheduler():
             
         try:
             num = int(user_input)
-            current_schedule = current_schedule[num:] + current_schedule[:num]
-            sliced_names = current_schedule[0:5]
-            print(f"New top 5: {sliced_names}")
-            ws.append(sliced_names)
-            wb.save("Book1.xlsx")
+            for _ in range(rotations):
+                current_schedule = current_schedule[num:] + current_schedule[:num]
+                sliced_names = current_schedule[0:5]
+                print(f"New top 5: {sliced_names}")
+                ws.append(sliced_names)
+                wb.save("Book1.xlsx")
         except ValueError:
             print("Please enter a number")
 
 scheduler()
-
